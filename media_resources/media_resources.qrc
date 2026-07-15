@@ -1,0 +1,20 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>family_tree.ico</file>
+    <file>Select.ico</file>
+    <file>Review.ico</file>
+    <file>Generate.ico</file>
+    <file>Family.ico</file>
+    <file>Edit.ico</file>
+    <file>Avatar.ico</file>
+    <file>Add_color_pressed.ico</file>
+    <file>Add_color.ico</file>
+    <file>Add.ico</file>
+  </qresource>
+  <qresource prefix="photos">
+    <file>fileld_of_dots.png</file>
+    <file>family_tree.png</file>
+    <file>Default_avatar.png</file>
+    <file>Add_image.png</file>
+  </qresource>
+</RCC>

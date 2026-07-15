@@ -12,16 +12,16 @@ from business_logic import (
     Review,
 )
 from business_logic.constructor import WORKBOOK_NAME
-from pyui import UIMainWindow
+from pyui import Ui_MainWindow
 
 
 def open() -> None:
     app = QtWidgets.QApplication(sys.argv)
 
     main_window = QtWidgets.QMainWindow()
-    ui_main_window = UIMainWindow()
+    ui_main_window = Ui_MainWindow()
     ui_main_window.setupUi(main_window)
-    main_window.show()
+    main_window.showMaximized()
 
     my_card = MyCard(ui_main_window.pushButton_myCard)
     add_remove_clan = AddRemoveClan()
@@ -32,9 +32,7 @@ def open() -> None:
 
     # Register window opening events.
     ui_main_window.pushButton_myCard.clicked.connect(my_card.openEvent)
-    ui_main_window.pushButton_addRemoveClan.clicked.connect(
-        add_remove_clan.openEvent
-    )
+    ui_main_window.pushButton_addRemoveClan.clicked.connect(add_remove_clan.openEvent)
     ui_main_window.pushButton_addEdit.clicked.connect(add_edit.openEvent)
     ui_main_window.pushButton_familyTies.clicked.connect(family_ties.openEvent)
     ui_main_window.pushButton_review.clicked.connect(review.openEvent)
@@ -42,9 +40,7 @@ def open() -> None:
     # Condition of pressing buttons / changing combo boxes.
     my_card.ui_window.image_Button.clicked.connect(my_card.set_avatar)
     my_card.ui_window.pushButton_done.clicked.connect(my_card.save)
-    add_remove_clan.ui_window.pushButton_done.clicked.connect(
-        add_remove_clan.save
-    )
+    add_remove_clan.ui_window.pushButton_done.clicked.connect(add_remove_clan.save)
 
     add_edit.ui_window.comboBox_addEdit.currentIndexChanged.connect(
         add_edit.refill_window

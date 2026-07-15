@@ -7,28 +7,28 @@ matplotlib.use("Qt5Agg")
 from os.path import join as join_path
 
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_qt5agg import (
-    FigureCanvasQTAgg as FigureCanvas,
-)
-from matplotlib.backends.backend_qt5agg import (
-    NavigationToolbar2QT as NavigationToolbar,
-)
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class UIGraph(object):
     def setupUi(self, Graph):
         Graph.setObjectName("Graph")
-        Graph.resize(850, 630)
-        Graph.setMinimumSize(QtCore.QSize(640, 400))
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(Graph.sizePolicy().hasHeightForWidth())
         icon = QtGui.QIcon()
         icon.addPixmap(
-            QtGui.QPixmap(join_path("icons", "Generate.ico")),
+            QtGui.QPixmap(join_path("media_resources", "Generate.ico")),
             QtGui.QIcon.Normal,
             QtGui.QIcon.Off,
         )
         Graph.setWindowIcon(icon)
-        Graph.setStyleSheet("background-color: rgb(32, 33, 37);\n" "")
+        Graph.setStyleSheet("background-color: rgb(32, 33, 37);\n")
         Graph.setModal(True)
         self.verticalLayout = QtWidgets.QVBoxLayout(Graph)
         self.verticalLayout.setContentsMargins(-1, 0, -1, 0)
@@ -43,14 +43,15 @@ class UIGraph(object):
         self.bottomLayout.setContentsMargins(0, -1, 0, -1)
         self.bottomLayout.setSpacing(10)
         self.bottomLayout.setObjectName("bottomLayout")
-        self.frame_top = QtWidgets.QFrame(self.main_frame)
-        self.frame_top.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_top.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_top.setObjectName("frame_top")
-        self.topLayout = QtWidgets.QHBoxLayout(self.frame_top)
+        self.frame_addSelClan = QtWidgets.QFrame(self.main_frame)
+        self.frame_addSelClan.setSizePolicy(sizePolicy)
+        self.frame_addSelClan.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.frame_addSelClan.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_addSelClan.setObjectName("frame_addSelClan")
+        self.topLayout = QtWidgets.QHBoxLayout(self.frame_addSelClan)
         self.topLayout.setContentsMargins(-1, -1, -1, 0)
         self.topLayout.setObjectName("topLayout")
-        self.label_choiceClan = QtWidgets.QLabel(self.frame_top)
+        self.label_choiceClan = QtWidgets.QLabel(self.frame_addSelClan)
         font = QtGui.QFont()
         font.setFamily("Segoe Print")
         font.setPointSize(15)
@@ -60,15 +61,20 @@ class UIGraph(object):
         self.label_choiceClan.setStyleSheet("color: white;")
         self.label_choiceClan.setTextFormat(QtCore.Qt.AutoText)
         self.label_choiceClan.setAlignment(
-            QtCore.Qt.AlignBottom
-            | QtCore.Qt.AlignLeading
-            | QtCore.Qt.AlignLeft
+            QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft
         )
         self.label_choiceClan.setObjectName("label_choiceClan")
         self.topLayout.addWidget(self.label_choiceClan)
-        self.comboBox_clan = QtWidgets.QComboBox(self.frame_top)
-        self.comboBox_clan.setMinimumSize(QtCore.QSize(222, 30))
-        self.comboBox_clan.setMaximumSize(QtCore.QSize(222, 30))
+        self.comboBox_clan = QtWidgets.QComboBox(self.frame_addSelClan)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Fixed
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.comboBox_clan.sizePolicy().hasHeightForWidth()
+        )
+        self.comboBox_clan.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Monotype Corsiva")
         font.setPointSize(14)
@@ -88,7 +94,7 @@ class UIGraph(object):
         self.comboBox_clan.setObjectName("comboBox_clan")
         self.topLayout.addWidget(self.comboBox_clan)
         self.bottomLayout.addWidget(
-            self.frame_top, 0, QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter
+            self.frame_addSelClan, 0, QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter
         )
         self.line = QtWidgets.QFrame(self.main_frame)
         self.line.setFrameShape(QtWidgets.QFrame.HLine)

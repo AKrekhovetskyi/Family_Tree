@@ -1,4 +1,5 @@
 from os.path import join as join_path
+from pathlib import Path
 from re import search
 from tkinter import messagebox as msbox
 from typing import Any
@@ -8,13 +9,13 @@ from PIL import Image
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from pyui import (
-    UIAddEdit,
-    UIAddRemoveClan,
-    UIFamilyTies,
+    Ui_AddEdit,
+    Ui_AddRemoveClan,
+    Ui_FamilyTies,
+    Ui_MainWindow,
+    Ui_MyCard,
+    Ui_Review,
     UIGraph,
-    UIMainWindow,
-    UIMyCard,
-    UIReview,
 )
 
 from .utils import fit_image_size
@@ -48,12 +49,12 @@ class WindowConstructor(QtWidgets.QDialog):
     def __init__(
         self,
         window: type[
-            UIAddEdit
-            | UIAddRemoveClan
-            | UIFamilyTies
-            | UIMainWindow
-            | UIMyCard
-            | UIReview
+            Ui_AddEdit
+            | Ui_AddRemoveClan
+            | Ui_FamilyTies
+            | Ui_MainWindow
+            | Ui_MyCard
+            | Ui_Review
             | UIGraph
         ],
         **kwargs: Any,
@@ -90,9 +91,7 @@ class WindowConstructor(QtWidgets.QDialog):
                 "Увага!",
                 "Інформація не введена в одне з обов'язкових полів!",
             )
-        elif any(
-            search(r"[:\/\*\?[\]<>|]", item) for item in family_member.values()
-        ):
+        elif any(search(r"[:\/\*\?[\]<>|]", item) for item in family_member.values()):
             msbox.showerror(
                 "Помилка!",
                 "Заборонено вводити такі символи: / \ * ? [ ] < > : |",
@@ -108,11 +107,11 @@ class WindowConstructor(QtWidgets.QDialog):
 
     def set_icon(self, image_name: str) -> None:
         image_path = join_path("avatars", image_name)
+        if not Path(image_path).exists():
+            image_path = join_path("media_resources", "Default_avatar.png")
         image_size = Image.open(image_path).size
         fitted_size = fit_image_size(image_size)
         icon = QtGui.QIcon()
-        icon.addPixmap(
-            QtGui.QPixmap(image_path), QtGui.QIcon.Normal, QtGui.QIcon.Off
-        )
+        icon.addPixmap(QtGui.QPixmap(image_path), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.ui_window.image_Button.setIcon(icon)
         self.ui_window.image_Button.setIconSize(QtCore.QSize(*fitted_size))

@@ -2,22 +2,20 @@ from typing import Any
 
 from PyQt5 import QtWidgets
 
-from pyui import UIReview
+from pyui import Ui_Review
 
 from .constructor import WindowConstructor
 
 
 class Review(WindowConstructor):
     def __init__(self) -> None:
-        super().__init__(UIReview)
+        super().__init__(Ui_Review)
 
     def openEvent(self) -> None:
         super().openEvent()
         self.ui_window.comboBox_clan.addItems(self.workbook.sheetnames)
         self.fill_table()
-        self.ui_window.comboBox_clan.currentIndexChanged.connect(
-            self.fill_table
-        )
+        self.ui_window.comboBox_clan.currentIndexChanged.connect(self.fill_table)
 
     def closeEvent(self, *args: Any) -> None:
         self.ui_window.comboBox_clan.disconnect()

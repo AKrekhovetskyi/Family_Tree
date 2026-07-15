@@ -1,7 +1,7 @@
 from typing import Any
 from uuid import uuid4
 
-from pyui import UIAddEdit
+from pyui import Ui_AddEdit
 
 from .constructor import WindowConstructor
 from .utils import remove_image_if_exists, select_image
@@ -9,7 +9,7 @@ from .utils import remove_image_if_exists, select_image
 
 class AddEdit(WindowConstructor):
     def __init__(self) -> None:
-        super().__init__(UIAddEdit)
+        super().__init__(Ui_AddEdit)
 
     def openEvent(self) -> None:
         super().openEvent()

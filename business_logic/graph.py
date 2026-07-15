@@ -19,9 +19,7 @@ class Graph(WindowConstructor):
         super().openEvent()
         self.ui_window.comboBox_clan.addItems(self.workbook.sheetnames)
         self.grow_tree()
-        self.ui_window.comboBox_clan.currentIndexChanged.connect(
-            self.grow_tree
-        )
+        self.ui_window.comboBox_clan.currentIndexChanged.connect(self.grow_tree)
 
     def closeEvent(self, *args: Any) -> None:
         self.ui_window.comboBox_clan.disconnect()
@@ -42,7 +40,7 @@ class Graph(WindowConstructor):
         family_tree = nx.DiGraph()  # Directed graph.
         ax = self.ui_window.figure.add_subplot()
         id_to_name, id_to_image = {}, {}
-        default_image = join_path("avatars", "Default_avatar.png")
+        default_image = join_path("media_resources", "Default_avatar.png")
 
         # Iterate over rows and add edges to the graph.
         for row in worksheet.iter_rows(min_row=1, values_only=True):
@@ -61,9 +59,7 @@ class Graph(WindowConstructor):
                 family_tree.add_edge(person_id, partner_id)
 
             id_to_image[person_id] = (
-                join_path("avatars", image_path)
-                if image_path
-                else default_image
+                join_path("avatars", image_path) if image_path else default_image
             )
             id_to_name[person_id] = f"{last_name} {first_name}"
 
@@ -85,9 +81,7 @@ class Graph(WindowConstructor):
                 y + 20,
                 id_to_name[node_id],
                 ha="center",
-                bbox=dict(
-                    facecolor="white", alpha=0.7, edgecolor="none", pad=1
-                ),
+                bbox=dict(facecolor="white", alpha=0.7, edgecolor="none", pad=1),
             )
         nx.draw_networkx_edges(
             family_tree,
