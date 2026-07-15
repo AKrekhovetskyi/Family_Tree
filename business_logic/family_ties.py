@@ -3,7 +3,7 @@ from typing import Any
 
 from PyQt5 import QtCore, QtWidgets
 
-from pyui import UIFamilyTies
+from pyui import Ui_FamilyTies
 
 from .constructor import WindowConstructor
 
@@ -14,18 +14,14 @@ class FamilyTies(WindowConstructor):
         All actions take place from the point of view of the person for whom
         the connections are made.
         """
-        super().__init__(UIFamilyTies)
+        super().__init__(Ui_FamilyTies)
 
     def openEvent(self) -> None:
         super().openEvent()
         self.ui_window.comboBox_clan.addItems(self.workbook.sheetnames)
         self._reset_window()
-        self.ui_window.comboBox_clan.currentIndexChanged.connect(
-            self.reset_window
-        )
-        self.ui_window.comboBox_person.currentIndexChanged.connect(
-            self.fill_window
-        )
+        self.ui_window.comboBox_clan.currentIndexChanged.connect(self.reset_window)
+        self.ui_window.comboBox_person.currentIndexChanged.connect(self.fill_window)
 
     def closeEvent(self, *args: Any) -> None:
         self.ui_window.comboBox_clan.disconnect()
@@ -130,14 +126,10 @@ class FamilyTies(WindowConstructor):
     def reset_window(self) -> None:
         self.ui_window.comboBox_person.disconnect()
         self._reset_window()
-        self.ui_window.comboBox_person.currentIndexChanged.connect(
-            self.fill_window
-        )
+        self.ui_window.comboBox_person.currentIndexChanged.connect(self.fill_window)
 
     def is_input_valid(self, family: dict[str, list[str]]) -> bool:
-        members = [
-            member for group in family.values() for member in group if member
-        ]
+        members = [member for group in family.values() for member in group if member]
         if not family["person"][0]:
             msbox.showerror("Помилка!", "Оберіть, для кого створити зв'язки.")
             return False

@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from PyQt5 import QtGui, QtWidgets
 
-from pyui import UIMyCard
+from pyui import Ui_MyCard
 
 from .constructor import WindowConstructor
 from .utils import remove_image_if_exists, select_image
@@ -11,7 +11,7 @@ from .utils import remove_image_if_exists, select_image
 
 class MyCard(WindowConstructor):
     def __init__(self, pushButton_myCard: QtWidgets.QPushButton) -> None:
-        super().__init__(UIMyCard)
+        super().__init__(Ui_MyCard)
         self.pushButton_mainWindow = pushButton_myCard
 
     def openEvent(self) -> None:
@@ -33,21 +33,11 @@ class MyCard(WindowConstructor):
 
             self.ui_window.lineEdit_lname.setText(self.worksheet["G1"].value)
             self.ui_window.lineEdit_fname.setText(self.worksheet["H1"].value)
-            self.ui_window.lineEdit_patronymic.setText(
-                self.worksheet["I1"].value
-            )
-            self.ui_window.lineEdit_yearOfBirth.setText(
-                self.worksheet["J1"].value
-            )
-            self.ui_window.lineEdit_yearOfDeath.setText(
-                self.worksheet["K1"].value
-            )
-            self.ui_window.lineEdit_placeOfBirth.setText(
-                self.worksheet["L1"].value
-            )
-            self.ui_window.lineEdit_placeOfDeath.setText(
-                self.worksheet["M1"].value
-            )
+            self.ui_window.lineEdit_patronymic.setText(self.worksheet["I1"].value)
+            self.ui_window.lineEdit_yearOfBirth.setText(self.worksheet["J1"].value)
+            self.ui_window.lineEdit_yearOfDeath.setText(self.worksheet["K1"].value)
+            self.ui_window.lineEdit_placeOfBirth.setText(self.worksheet["L1"].value)
+            self.ui_window.lineEdit_placeOfDeath.setText(self.worksheet["M1"].value)
             self.ui_window.plainTextEdit_addinfo.setPlainText(
                 self.worksheet["N1"].value
             )
@@ -62,7 +52,7 @@ class MyCard(WindowConstructor):
     def set_my_card_button_label(self) -> None:
         self.pushButton_mainWindow.setText(
             f"Рід: {self.worksheet.title}\n"
-            + f'{self.worksheet["H1"].value} {self.worksheet["G1"].value}'
+            + f"{self.worksheet['H1'].value} {self.worksheet['G1'].value}"
         )
         if image_name := self.worksheet["A1"].value:
             icon1 = QtGui.QIcon()

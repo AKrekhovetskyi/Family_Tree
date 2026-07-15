@@ -1,14 +1,14 @@
 from re import search
 from tkinter import messagebox as msbox
 
-from pyui import UIAddRemoveClan
+from pyui import Ui_AddRemoveClan
 
 from .constructor import WindowConstructor
 
 
 class AddRemoveClan(WindowConstructor):
     def __init__(self) -> None:
-        super().__init__(UIAddRemoveClan)
+        super().__init__(Ui_AddRemoveClan)
 
     def openEvent(self) -> None:
         super().openEvent()
@@ -18,9 +18,7 @@ class AddRemoveClan(WindowConstructor):
         self.ui_window.lineEdit_addClan.clear()
         self.ui_window.comboBox_RemoveClan.clear()
         self.ui_window.comboBox_RemoveClan.insertItem(0, "")
-        self.ui_window.comboBox_RemoveClan.insertItems(
-            1, self.workbook.sheetnames
-        )
+        self.ui_window.comboBox_RemoveClan.insertItems(1, self.workbook.sheetnames)
 
     def save(self) -> None:
         clan_name = self.ui_window.lineEdit_addClan.text()
